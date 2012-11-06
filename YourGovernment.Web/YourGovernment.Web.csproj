@@ -183,6 +183,7 @@
     <Content Include="Scripts\jquery.address-1.4.min.js" />
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
+    <Content Include="Scripts\LandingScreen.js" />
     <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\r.js" />
@@ -264,14 +265,5 @@
   </Target> -->
   <Target Name="AfterBuild">
     <TransformXml Condition="Exists('$(OutDir)\_PublishedWebsites\$(TargetName)')" Source="Web.config" Transform="$(ProjectConfigTransformFileName)" Destination="$(OutDir)\_PublishedWebsites\$(TargetName)\Web.config" />
-  </Target>
-  <Target Name="AfterBuild" Condition=" '$(Configuration)'!='Debug' ">
-    <CreateItem Include="$(IntermediateOutputPath)\BuiltScripts\**\*">
-      <Output TaskParameter="Include" ItemName="ReleaseFiles" />
-    </CreateItem>
-    <!--Copy to the output folder-->
-    <Copy SourceFiles="@(ReleaseFiles)" ContinueOnError="true" SkipUnchangedFiles="true" DestinationFiles="@(ReleaseFiles->'$(OutDir)\_PublishedWebsites\$(TargetName)\Scripts\Built\%(RecursiveDir)%(Filename)%(Extension)')" />
-    <!--Copy to the scripts folder (for local testing)-->
-    <Copy SourceFiles="@(ReleaseFiles)" ContinueOnError="true" SkipUnchangedFiles="true" DestinationFiles="@(ReleaseFiles->'$(ProjectDir)\Scripts\Built\%(RecursiveDir)%(Filename)%(Extension)')" />
   </Target>
 </Project>
