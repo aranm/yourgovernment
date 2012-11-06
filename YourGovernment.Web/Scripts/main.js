@@ -3,10 +3,10 @@ require.config({
    //baseUrl: "scripts/v1.0",
    paths: {
       //3rd Party libraries
-      'knockout': 'http://cdnjs.cloudflare.com/ajax/libs/knockout/2.2.0/knockout-min',
-      'jquery' : 'https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min',
+      'knockout': '//cdnjs.cloudflare.com/ajax/libs/knockout/2.2.0/knockout-min',
+      'jquery': '//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.min',
       'address': 'jquery.address-1.4.min',
-      'bootstrap': 'http://netdna.bootstrapcdn.com/twitter-bootstrap/2.2.1/js/bootstrap.min',
+      'bootstrap': '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.1/bootstrap.min',
       "ArrayExtension": "Utilities/ArrayExtension",
       "StringExtension": "Utilities/StringExtension",
 
