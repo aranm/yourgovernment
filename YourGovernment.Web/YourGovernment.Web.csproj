@@ -153,8 +153,12 @@
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Dependencies\node\node.exe" />
-    <Content Include="Dependencies\node\node_modules\requirejs\bin\r.js" />
-    <Content Include="Dependencies\node\node_modules\requirejs\require.js" />
+    <Content Include="Dependencies\node\node_modules\requirejs\bin\r.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Dependencies\node\node_modules\requirejs\require.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\app.build.js" />
@@ -219,14 +223,17 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Scripts\Built\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Dependencies\node\node_modules\requirejs\.npmignore" />
-    <Content Include="Dependencies\node\node_modules\requirejs\package.json" />
+    <Content Include="Dependencies\node\node_modules\requirejs\.npmignore">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Dependencies\node\node_modules\requirejs\package.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
