@@ -153,12 +153,8 @@
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
     <Content Include="Dependencies\node\node.exe" />
-    <Content Include="Dependencies\node\node_modules\requirejs\bin\r.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Dependencies\node\node_modules\requirejs\require.js">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Dependencies\node\node_modules\requirejs\bin\r.js" />
+    <Content Include="Dependencies\node\node_modules\requirejs\require.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\app.build.js" />
@@ -228,12 +224,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Dependencies\node\node_modules\requirejs\.npmignore">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Dependencies\node\node_modules\requirejs\package.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="Dependencies\node\node_modules\requirejs\.npmignore" />
+    <Content Include="Dependencies\node\node_modules\requirejs\package.json" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -278,7 +270,7 @@
       <Output PropertyName="BuildScriptsPath" TaskParameter="DirectoriesCreated" />
     </MakeDir>
     <!--Minify the scripts with node, write the minified output to the intermedaite folder-->
-    <Exec Command="$(ProjectDir)Dependencies\node\node $(ProjectDir)Dependencies\node\node_modules\requirejs\bin\r.js -o $(ProjectDir)scripts\app.build.js" />
+    <!--<Exec Command="$(ProjectDir)Dependencies\node\node $(ProjectDir)Dependencies\node\node_modules\requirejs\bin\r.js -o $(ProjectDir)scripts\app.build.js" />-->
     <!-- Create an item group for the minified scripts so we manipulate the target path. -->
     <!--<CreateItem Include="$(BuildScriptsPath)\**\*">
       <Output ItemName="BuiltScripts" TaskParameter="Include" />
