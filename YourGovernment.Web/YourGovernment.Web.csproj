@@ -146,8 +146,22 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-responsive.css" />
+    <Content Include="Content\bootstrap-responsive.min.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\glyphicons-halflings-white.png" />
+    <Content Include="Content\images\glyphicons-halflings.png" />
+    <Content Include="Dependencies\node\node.exe" />
+    <Content Include="Dependencies\node\node_modules\requirejs\bin\r.js" />
+    <Content Include="Dependencies\node\node_modules\requirejs\require.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\app.build.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Configuration\AjaxConfiguration.js" />
+    <Content Include="Scripts\Configuration\RoutingConfiguration.js" />
     <Content Include="Scripts\Framework\Core.Address.js" />
     <Content Include="Scripts\Framework\Core.Ajax.js" />
     <Content Include="Scripts\Framework\Core.Communication.js" />
@@ -163,11 +177,18 @@
     <Content Include="Scripts\Framework\Core.Singleton.js" />
     <Content Include="Scripts\Framework\Core.Storage.js" />
     <Content Include="Scripts\Framework\Sandbox.js" />
+    <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.8.2.js" />
+    <Content Include="Scripts\jquery-1.8.2.min.js" />
+    <Content Include="Scripts\jquery.address-1.4.min.js" />
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
+    <Content Include="Scripts\main.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\r.js" />
     <Content Include="Scripts\require.js" />
+    <Content Include="Scripts\Utilities\ArrayExtension.js" />
+    <Content Include="Scripts\Utilities\StringExtension.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -198,9 +219,14 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Scripts\Built\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Dependencies\node\node_modules\requirejs\.npmignore" />
+    <Content Include="Dependencies\node\node_modules\requirejs\package.json" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -237,4 +263,41 @@
   </Target>
   <Target Name="AfterBuild">
   </Target> -->
+  <Target Name="BeforeBuild" Condition=" '$(Configuration)'!='Debug' ">
+    <!-- Create the 'BuildScripts' directory. -->
+    <!-- The $(IntermediateOutputPath) reference the 'obj' folder, which I like to -->
+    <!-- use for these kinds of things. -->
+    <MakeDir Directories="$(IntermediateOutputPath)\BuiltScripts">
+      <Output PropertyName="BuildScriptsPath" TaskParameter="DirectoriesCreated" />
+    </MakeDir>
+    <!--Minify the scripts with node, write the minified output to the intermedaite folder-->
+    <Exec Command="$(ProjectDir)Dependencies\node\node $(ProjectDir)Dependencies\node\node_modules\requirejs\bin\r.js -o $(ProjectDir)scripts\app.build.js" />
+    <!-- Create an item group for the minified scripts so we manipulate the target path. -->
+    <!--<CreateItem Include="$(BuildScriptsPath)\**\*">
+      <Output ItemName="BuiltScripts" TaskParameter="Include" />
+      <Output ItemName="FileWrites" TaskParameter="Include" />
+    </CreateItem>-->
+    <!-- Create another item group so clean removes built scripts from the Scripts\Built folder. -->
+    <!--<CreateItem Include="$(ProjectDir)\Scripts\Built\**\*">
+      <Output ItemName="ProjectBuiltScripts" TaskParameter="Include" />
+      <Output ItemName="FileWrites" TaskParameter="Include" />
+    </CreateItem>-->
+    <!-- Add the minified scripts to the Content item group, -->
+    <!-- which the deployment MSBuild inspects for files to deploy. -->
+    <!--<CreateItem Include="@(BuiltScripts)" AdditionalMetadata="TargetPath=Scripts\Built\%(Filename)%(Extension)">
+      <Output ItemName="ContentWithTargetPath" TaskParameter="Include" />
+    </CreateItem>-->
+  </Target>
+  <Target Name="AfterBuild">
+    <TransformXml Condition="Exists('$(OutDir)\_PublishedWebsites\$(TargetName)')" Source="Web.config" Transform="$(ProjectConfigTransformFileName)" Destination="$(OutDir)\_PublishedWebsites\$(TargetName)\Web.config" />
+  </Target>
+  <Target Name="AfterBuild" Condition=" '$(Configuration)'!='Debug' ">
+    <CreateItem Include="$(IntermediateOutputPath)\BuiltScripts\**\*">
+      <Output TaskParameter="Include" ItemName="ReleaseFiles" />
+    </CreateItem>
+    <!--Copy to the output folder-->
+    <Copy SourceFiles="@(ReleaseFiles)" ContinueOnError="true" SkipUnchangedFiles="true" DestinationFiles="@(ReleaseFiles->'$(OutDir)\_PublishedWebsites\$(TargetName)\Scripts\Built\%(RecursiveDir)%(Filename)%(Extension)')" />
+    <!--Copy to the scripts folder (for local testing)-->
+    <Copy SourceFiles="@(ReleaseFiles)" ContinueOnError="true" SkipUnchangedFiles="true" DestinationFiles="@(ReleaseFiles->'$(ProjectDir)\Scripts\Built\%(RecursiveDir)%(Filename)%(Extension)')" />
+  </Target>
 </Project>
