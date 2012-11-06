@@ -152,9 +152,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\images\glyphicons-halflings-white.png" />
     <Content Include="Content\images\glyphicons-halflings.png" />
-    <Content Include="Dependencies\node\node.exe" />
-    <Content Include="Dependencies\node\node_modules\requirejs\bin\r.js" />
-    <Content Include="Dependencies\node\node_modules\requirejs\require.js" />
+    <None Include="Dependencies\node\node.exe" />
+    <None Include="Dependencies\node\node_modules\requirejs\bin\r.js" />
+    <None Include="Dependencies\node\node_modules\requirejs\require.js" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\app.build.js" />
@@ -224,8 +224,8 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Dependencies\node\node_modules\requirejs\.npmignore" />
-    <Content Include="Dependencies\node\node_modules\requirejs\package.json" />
+    <None Include="Dependencies\node\node_modules\requirejs\.npmignore" />
+    <None Include="Dependencies\node\node_modules\requirejs\package.json" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -262,31 +262,6 @@
   </Target>
   <Target Name="AfterBuild">
   </Target> -->
-  <Target Name="BeforeBuild" Condition=" '$(Configuration)'!='Debug' ">
-    <!-- Create the 'BuildScripts' directory. -->
-    <!-- The $(IntermediateOutputPath) reference the 'obj' folder, which I like to -->
-    <!-- use for these kinds of things. -->
-    <MakeDir Directories="$(IntermediateOutputPath)\BuiltScripts">
-      <Output PropertyName="BuildScriptsPath" TaskParameter="DirectoriesCreated" />
-    </MakeDir>
-    <!--Minify the scripts with node, write the minified output to the intermedaite folder-->
-    <!--<Exec Command="$(ProjectDir)Dependencies\node\node $(ProjectDir)Dependencies\node\node_modules\requirejs\bin\r.js -o $(ProjectDir)scripts\app.build.js" />-->
-    <!-- Create an item group for the minified scripts so we manipulate the target path. -->
-    <!--<CreateItem Include="$(BuildScriptsPath)\**\*">
-      <Output ItemName="BuiltScripts" TaskParameter="Include" />
-      <Output ItemName="FileWrites" TaskParameter="Include" />
-    </CreateItem>-->
-    <!-- Create another item group so clean removes built scripts from the Scripts\Built folder. -->
-    <!--<CreateItem Include="$(ProjectDir)\Scripts\Built\**\*">
-      <Output ItemName="ProjectBuiltScripts" TaskParameter="Include" />
-      <Output ItemName="FileWrites" TaskParameter="Include" />
-    </CreateItem>-->
-    <!-- Add the minified scripts to the Content item group, -->
-    <!-- which the deployment MSBuild inspects for files to deploy. -->
-    <!--<CreateItem Include="@(BuiltScripts)" AdditionalMetadata="TargetPath=Scripts\Built\%(Filename)%(Extension)">
-      <Output ItemName="ContentWithTargetPath" TaskParameter="Include" />
-    </CreateItem>-->
-  </Target>
   <Target Name="AfterBuild">
     <TransformXml Condition="Exists('$(OutDir)\_PublishedWebsites\$(TargetName)')" Source="Web.config" Transform="$(ProjectConfigTransformFileName)" Destination="$(OutDir)\_PublishedWebsites\$(TargetName)\Web.config" />
   </Target>
