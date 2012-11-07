@@ -1,12 +1,23 @@
 ﻿/*globals require, define, Modernizr*/
 require.config({
-   //baseUrl: "scripts/v1.0",
    paths: {
       //3rd Party libraries
-      'knockout': '//cdnjs.cloudflare.com/ajax/libs/knockout/2.2.0/knockout-min',
-      'jquery': '//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.min',
-      'address': 'jquery.address-1.4.min',
-      'bootstrap': '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.1/bootstrap.min',
+      knockout: [
+         '//cdnjs.cloudflare.com/ajax/libs/knockout/2.2.0/knockout-min',
+         'knockout-2.2.0'
+      ],
+      jquery: [
+         '//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.2/jquery.min',
+         'jquery-1.8.2.min'
+      ],
+      bootstrap: [
+         '//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/2.2.1/bootstrap.min',
+         'bootstrap'
+      ],
+      address: [
+         '//cdnjs.cloudflare.com/ajax/libs/jquery.address/1.5/jquery.address.min',
+         'jquery.address-1.4.min'
+      ],
       "ArrayExtension": "Utilities/ArrayExtension",
       "StringExtension": "Utilities/StringExtension",
 
